@@ -1,18 +1,27 @@
 import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
+import { ItemBase } from './ItemBase.js';
 import { LivroFisico, Ebook} from './TiposDeItens.js';
-import {Leitor} from './Leitor.js'; //n tinha ido pq precisava ser declarado!
-import {ItemBase} from './ItemBase.js';
+import {Leitor} from './Leitor.js';
+import { AtendimentoBiblioteca } from './AtendimentoBiblioteca.js';
 
-async function iniciarSistema(){} //para q n pare a execução esperando retorno
+async function iniciarSistema(){} //para q n pare a execução esperando retorno // as chaves precisa fechar o código
 const rl = readline.createInterface({ input, output });
 
-
+console.log("========================================");
 console.log("=== Sistema de Gestão da Biblioteca ===");
+console.log("========================================");
 
-const nome = await rl.question("Digite seu nome: ");
-const idade = parseInt(await rl.question("Informe sua idade: "));
-const leitor = new Leitor(nome,idade);//puxa as variaveis
+const nomeLeitor = await rl.question("Digite seu nome: ");
+const idadeLeitor = parseInt(await rl.question("Informe sua idade: "));
+
+
+const atendimento = new AtendimentoBiblioteca();
+
+
+//atendimento.verificarIdade(idade);
+atendimento.gerarNovoLeitor(nomeLeitor, idadeLeitor); // n tinha
+
 
 
 console.log("\n Selecione qual item você deseja cadastrar: ");
@@ -23,7 +32,7 @@ console.log("2- E-book.");
     const titulo = await rl.question("Digite o título: ");
     const nomeAutor = await rl.question("Digite o nome do autor(a): ");
     const anoPublicacao = parseInt(await rl.question("Digite o ano de publicação: ")); 
-         
+        //assim pergunta uma vez e repete pra cada uma 
 
 let item;
 switch (tipos){
@@ -47,3 +56,4 @@ switch (tipos){
             console.log(`\n O total de dias de atrasos são: R$ ${totalAtrasos.toFixed(2)}`);
 }
 rl.close();
+iniciarSistema();
